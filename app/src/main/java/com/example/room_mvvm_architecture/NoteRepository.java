@@ -7,12 +7,18 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+
+/**********All operation in database***********/
+/**********This is mainly used to connect local and global database together***********/
 public class NoteRepository {
     private NoteDao noteDao;
     private LiveData<List<Note>> allNotes;
 
     public NoteRepository(Application application){
+        /**Create database without this we can't create database**/
         NoteDatabase noteDatabase = NoteDatabase.getInstance(application);
+
+        /****Get NoteDao instance using NoteDatabase class for database operation****/
         noteDao = noteDatabase.noteDao();
         allNotes = noteDao.getAllNotes();
     }
@@ -37,6 +43,7 @@ public class NoteRepository {
         return allNotes;
     }
 
+    /*****Operation must be background thread****/
     private static class InsertNoteAsyncTask extends AsyncTask <Note,Void,Void>{
         private NoteDao noteDao;
 
@@ -51,6 +58,7 @@ public class NoteRepository {
         }
     }
 
+    /*****Operation must be background thread****/
     private static class UpdateNoteAsyncTask extends AsyncTask <Note,Void,Void>{
         private NoteDao noteDao;
 
@@ -65,6 +73,7 @@ public class NoteRepository {
         }
     }
 
+    /*****Operation must be background thread****/
     private static class DeleteNoteAsyncTask extends AsyncTask <Note,Void,Void>{
         private NoteDao noteDao;
 
@@ -79,6 +88,7 @@ public class NoteRepository {
         }
     }
 
+    /*****Operation must be background thread****/
     private static class DeleteAllNoteAsyncTask extends AsyncTask <Void,Void,Void>{
         private NoteDao noteDao;
 

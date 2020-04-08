@@ -3,9 +3,11 @@ package com.example.room_mvvm_architecture;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/***********************This class Represent a table and its Column************************/
 @Entity(tableName = "note_table")
 public class Note {
 
+    /**********Every field is a column************/
     @PrimaryKey(autoGenerate = true)
     private int id;
 

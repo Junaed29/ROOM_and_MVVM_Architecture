@@ -5,6 +5,7 @@
 
     <dist:module dist:instant="true" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- parentActivityName=".MainActivity" when we click 'X' sign in toolbar it will go it's parent activity-->
         <activity android:name=".AddNoteActivity" android:parentActivityName=".MainActivity"></activity>
+
+        <!--When we click 'X' sign in toolbar it will MainActivity -->
+        <!-- to prevent, android:launchMode="singleTop" is used it will just resume the MainActivity-->
         <activity android:name=".MainActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
