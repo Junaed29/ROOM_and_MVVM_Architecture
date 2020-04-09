@@ -20,9 +20,11 @@ public class NoteListAdapter extends ListAdapter<Note, NoteListAdapter.NoteHolde
     private OnItemClickListener listener;
 
     public NoteListAdapter() {
+        /*******DIFF_CALLBACK is created by me*****/
         super(DIFF_CALLBACK);
     }
 
+    /*******it is static because there is no need to initialization to use this DIFF_CALLBACK object*****/
     private static final DiffUtil.ItemCallback<Note> DIFF_CALLBACK = new DiffUtil.ItemCallback<Note>() {
         @Override
         public boolean areItemsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
@@ -47,6 +49,7 @@ public class NoteListAdapter extends ListAdapter<Note, NoteListAdapter.NoteHolde
 
     @Override
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
+        /*****************getItem is a builtin method provide by List Adapter super class***************/
         Note currentNote = getItem(position);
         String title = currentNote.getTitle();
         String description = currentNote.getDescription();
@@ -79,6 +82,7 @@ public class NoteListAdapter extends ListAdapter<Note, NoteListAdapter.NoteHolde
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
+                        /*****************getItem is a builtin method provide by List Adapter super class***************/
                         listener.onItemClick(getItem(position));
                     }
                 }

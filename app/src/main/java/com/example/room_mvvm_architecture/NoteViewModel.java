@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+/******AndroidViewModel class which activity tp prevent crash when rotating screen******/
+/*******for this NoteViewModel extends AndroidViewModel Class******/
 public class NoteViewModel extends AndroidViewModel {
     private NoteRepository noteRepository;
     private LiveData <List<Note>> allNotes;

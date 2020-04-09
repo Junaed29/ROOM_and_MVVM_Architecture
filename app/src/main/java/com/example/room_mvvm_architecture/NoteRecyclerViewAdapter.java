@@ -17,6 +17,7 @@ import java.util.List;
 public class NoteRecyclerViewAdapter extends RecyclerView.Adapter<NoteRecyclerViewAdapter.NoteHolder> {
     List<Note> notes = new ArrayList<>();
 
+    /****Same instance which interface created below****/
     private OnItemClickListener listener;
 
     @NonNull
@@ -69,6 +70,7 @@ public class NoteRecyclerViewAdapter extends RecyclerView.Adapter<NoteRecyclerVi
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
+                        /*******pass the specific note reference to the override method*******/
                         listener.onItemClick(notes.get(position));
                     }
                 }
@@ -76,11 +78,14 @@ public class NoteRecyclerViewAdapter extends RecyclerView.Adapter<NoteRecyclerVi
         }
     }
 
+    /******interface for click listener******/
     public interface OnItemClickListener {
         void onItemClick(Note note);
     }
 
+    /*******From other class setOnItemClickListener(OnItemClickListener listener) method will call*****/
     public void setOnItemClickListener(OnItemClickListener listener) {
+        /********Connect this class listener with this method local parameter******/
         this.listener = listener;
     }
 }

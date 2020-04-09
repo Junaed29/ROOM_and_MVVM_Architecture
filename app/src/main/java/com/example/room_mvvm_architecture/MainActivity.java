@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerViewId);
+
+        /************General settings of RecyclerView********/
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
@@ -62,10 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 //noteRecyclerViewAdapter.setNotes(notes);
 
                 /*****************Using List Adapter***************/
+                /*****************submitList is a builtin method provide by List Adapter super class***************/
                 noteListAdapter.submitList(notes);
             }
         });
 
+        /********ItemTouchHelper for swiping delete*******/
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 noteViewModel.deleteNote(note);
                 Toast.makeText(MainActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
             }
+            /**with out attach ItemTouchHelper will not work**/
         }).attachToRecyclerView(recyclerView);
 
 
@@ -109,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddNoteActivity.EXTRA_TITLE,note.getTitle());
                 intent.putExtra(AddNoteActivity.EXTRA_DESCRIPTION,note.getDescription());
 
+                /******** "EDIT_NOTE_REQUEST" is used to get data from AddNoteActivity to edit*******/
+                /********When go with EDIT_NOTE_REQUEST to AddNoteActivity it will comeback with EDIT_NOTE_REQUEST*******/
                 startActivityForResult(intent,EDIT_NOTE_REQUEST);
             }
         });
@@ -116,14 +123,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void fabClick(View view) {
         Intent intent = new Intent(MainActivity.this,AddNoteActivity.class);
+
+        /******** "ADD_NOTE_REQUEST" is used to get data from AddNoteActivity to add*******/
+        /********When go with ADD_NOTE_REQUEST to AddNoteActivity it will comeback with ADD_NOTE_REQUEST*******/
         startActivityForResult(intent,ADD_NOTE_REQUEST);
+
     }
 
+    /*************Override method to get requested code back**********/
+    /*************this method is useful when we go from this activity and come to this activity with data**********/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_NOTE_REQUEST  && resultCode == RESULT_OK){
+
+            /************* "startActivityForResult(intent,ADD_NOTE_REQUEST);" work here**********/
+
             String title = data.getStringExtra(AddNoteActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddNoteActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(AddNoteActivity.EXTRA_PRIORITY,1);
@@ -133,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show();
         }else if (requestCode == EDIT_NOTE_REQUEST  && resultCode == RESULT_OK) {
+
+            /************* "startActivityForResult(intent,EDIT_NOTE_REQUEST);" work here**********/
+
             int id = data.getIntExtra(AddNoteActivity.EXTRA_Id,-1);
             
             if (id == -1){
